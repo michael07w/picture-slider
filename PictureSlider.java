@@ -167,14 +167,10 @@ public class PictureSlider extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame = new JFrame("About");
 				frame.setLayout(new GridBagLayout());
-				GridBagConstraints c = new GridBagConstraints();
 				JLabel author = new JLabel("Author: Michael Wessels");
 				JLabel version = new JLabel("Version: 1.0");
-				c.anchor = GridBagConstraints.CENTER;
-				c.gridy = 0;
-				frame.add(author, c);
-				c.gridy = 1;
-				frame.add(version, c);
+				frame.add(author, getConstraints(0, 0, 0, 0, GridBagConstraints.CENTER));
+				frame.add(version, getConstraints(0, 1, 0, 0, GridBagConstraints.CENTER));
 				frame.setSize(500, 350);
 				frame.setVisible(true);
 			}
