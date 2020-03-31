@@ -26,18 +26,11 @@ public class PictureSlider extends JFrame {
 		// add label to display images
 		JLabel label = new JLabel();
 		JPanel mainPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.CENTER;
-		c.weighty = 1.0;
-		c.gridy = 0;
 		mainPanel.add(label);
 		Container contentPane = getContentPane();
 		contentPane.add(mainPanel);
 		
 		// add picture control area
-		c.gridy = 1;
-		c.weighty = 0.1;
-		c.anchor = GridBagConstraints.PAGE_END;
 		JPanel bottomPanel = new JPanel(new FlowLayout());
 		JButton home = new JButton("Home");
 		bottomPanel.add(home);
@@ -47,7 +40,7 @@ public class PictureSlider extends JFrame {
 		bottomPanel.add(next);
 		JButton last = new JButton("Last");
 		bottomPanel.add(last);
-		mainPanel.add(bottomPanel, c);
+		mainPanel.add(bottomPanel, getConstraints(0, 1, 0.0, 0.1, GridBagConstraints.PAGE_END));
 		
 		// add home button functionality
 		home.addActionListener(new ActionListener() {
@@ -130,15 +123,12 @@ public class PictureSlider extends JFrame {
 					String name = chooser.getSelectedFile().getPath();
 					try {
 						photos = getPhotos(name);
-						for (String photo : photos)
-							System.out.println(photo);
 					} catch (FileNotFoundException e1) {
 						e1.printStackTrace();
 					}
 					
 					// create ImageIcons from provided photo URLs
 					icons = new ImageIcon[photoCount];
-					System.out.println(photos.size());
 					for (int i = 0; i < photos.size(); i++) {
 						try {
 							ImageIcon unsizedImg = new ImageIcon(new URL(photos.get(i)));
