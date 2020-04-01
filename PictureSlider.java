@@ -119,11 +119,24 @@ public class PictureSlider extends JFrame {
 				container.setLayout(new GridLayout(rows, 4));
 				
 				// populate buttons with photo thumbnails
-				JButton buttons[] = new JButton[photoCount];
+				//JButton buttons[] = new JButton[photoCount];
 				for (int i = 0; i < photoCount; i++) {
-					buttons[i] = new JButton();
-					buttons[i].setIcon(new ImageIcon(getScaledImage(icons[i].getImage(), 120, 100)));
-					container.add(buttons[i]);
+					JButton picButton = new JButton();
+					Image img = icons[i].getImage();
+					picButton.setIcon(new ImageIcon(getScaledImage(img, 120, 100)));
+					container.add(picButton);
+					picButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							ImageIcon imgIcon = new ImageIcon(getScaledImage(img, 700, 450));
+							JFrame imgFrame = new JFrame();
+							JLabel imgLabel = new JLabel();
+							imgLabel.setIcon(imgIcon);
+							imgFrame.add(imgLabel);
+							imgFrame.setSize(700, 450);
+							imgFrame.setVisible(true);
+						}
+					});
 				}
 				frame.setSize(700, 450);
 				frame.setVisible(true);
