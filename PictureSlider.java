@@ -36,10 +36,13 @@ public class PictureSlider extends JFrame {
 		bottomPanel.add(home);
 		JButton prev = new JButton("Previous");
 		bottomPanel.add(prev);
+		JButton play = new JButton("Play");
+		bottomPanel.add(play);
 		JButton next = new JButton("Next");
 		bottomPanel.add(next);
 		JButton last = new JButton("Last");
 		bottomPanel.add(last);
+		JButton thumbnail = new JButton("Photos");
 		mainPanel.add(bottomPanel, getConstraints(0, 1, 0.0, 0.1, GridBagConstraints.PAGE_END));
 		
 		// add home button functionality
@@ -49,7 +52,7 @@ public class PictureSlider extends JFrame {
 				// display first photo
 				j = 0;
 				label.setIcon(icons[j]);
-				timer.restart();
+				timer.stop();
 			}
 		});
 		
@@ -61,7 +64,16 @@ public class PictureSlider extends JFrame {
 				if (--j == -1)
 					j = photoCount - 1;
 				label.setIcon(icons[j]);
-				timer.restart();
+				timer.stop();
+			}
+		});
+		
+		// add play button functionality
+		play.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// start timer to begin slideshow
+				timer.start();
 			}
 		});
 		
@@ -73,7 +85,7 @@ public class PictureSlider extends JFrame {
 				if (++j == photoCount)
 					j = 0;
 				label.setIcon(icons[j]);
-				timer.restart();
+				timer.stop();
 			}
 		});
 		
@@ -84,7 +96,37 @@ public class PictureSlider extends JFrame {
 				// display last photo
 				j = photoCount - 1;
 				label.setIcon(icons[j]);
-				timer.restart();
+				timer.stop();
+			}
+		});
+		
+		// add thumbnail button functionality
+		thumbnail.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// create scrollable window for display of photos
+				JFrame frame = new JFrame();
+				JPanel container = new JPanel();
+				JScrollPane scrPane = new JScrollPane(container);
+				frame.add(scrPane);
+				// determine number of rows to generate
+				int rows = 1;
+				if (photoCount > 4 && photoCount % 4 > 0)
+					rows = photoCount / 4 + 1;
+				else if (photoCount > 4)
+					rows = photoCount / 4;
+
+				container.setLayout(new GridLayout(rows, 4));
+				
+				// populate labels with photo thumbnails
+				JLabel labels[] = new JLabel[photoCount];
+				for (int i = 0; i < photoCount; i++) {
+					labels[i] = new JLabel();
+					labels[i].setIcon(new ImageIcon(getScaledImage(icons[i].getImage(), 120, 100)));
+					container.add(labels[i]);
+				}
+				frame.setSize(700, 450);
+				frame.setVisible(true);
 			}
 		});
 		
@@ -138,8 +180,11 @@ public class PictureSlider extends JFrame {
 							e1.printStackTrace();
 						}
 					}
+					label.setIcon(icons[j]);		// display first image
+					
+					// display thumbnail button
+					bottomPanel.add(thumbnail);
 				}
-				timer.start();
 			}
 		});
 		
@@ -222,6 +267,7 @@ public class PictureSlider extends JFrame {
 			String phrase = sc.nextLine();
 			String[] tokens = phrase.split(delims);
 			photoURLs.add(i++, tokens[1]);
+			System.out.println(tokens[1]);
 		}
 		photoCount = i;
 		System.out.println(photoCount);
