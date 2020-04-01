@@ -13,7 +13,7 @@ public class PictureSlider extends JFrame {
 	private final Timer timer = new Timer(5000, null);
 	private JFileChooser chooser;
 	private ImageIcon[] icons;
-	private static int j = 0;		// tracks which photo is displayed
+	private static int j = 0;		   // tracks which photo is displayed
 	private static int photoCount = 0; // number of photos to be displayed
 	
 	public PictureSlider() {
@@ -125,6 +125,7 @@ public class PictureSlider extends JFrame {
 					Image img = icons[i].getImage();
 					picButton.setIcon(new ImageIcon(getScaledImage(img, 120, 100)));
 					container.add(picButton);
+					// display image preview if clicked
 					picButton.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
