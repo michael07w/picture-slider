@@ -118,12 +118,12 @@ public class PictureSlider extends JFrame {
 
 				container.setLayout(new GridLayout(rows, 4));
 				
-				// populate labels with photo thumbnails
-				JLabel labels[] = new JLabel[photoCount];
+				// populate buttons with photo thumbnails
+				JButton buttons[] = new JButton[photoCount];
 				for (int i = 0; i < photoCount; i++) {
-					labels[i] = new JLabel();
-					labels[i].setIcon(new ImageIcon(getScaledImage(icons[i].getImage(), 120, 100)));
-					container.add(labels[i]);
+					buttons[i] = new JButton();
+					buttons[i].setIcon(new ImageIcon(getScaledImage(icons[i].getImage(), 120, 100)));
+					container.add(buttons[i]);
 				}
 				frame.setSize(700, 450);
 				frame.setVisible(true);
